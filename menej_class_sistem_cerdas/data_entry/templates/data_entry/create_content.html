@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="alert alert-warning" role="alert">
+    Entry Konten
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+<div class="alert alert-warning" role="alert">
+    Daftar Konten
+</div>
+
+<table class="table table-bordered" id="content_tbl">
+    <thead>
+        <tr>
+            <th scope="col">Pengguna</th>
+            <th scope="col">Artikel</th>
+            <th scope="col">Tanggal Create</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for content in list_content %}
+        <tr class="record">
+            <td><label>{{ content.author.email }}</label></td>
+            <td><label>{{ content.article }}</label></td>
+            <td><label>{{ content.date_created|date:"d-m-Y H:i" }}</label></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

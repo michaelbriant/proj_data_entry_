@@ -1,6 +1,5 @@
 from django import forms
-from .models import Pengguna
-from .models import Content
+from .models import Pengguna, Content
 
 STATES = (
     ('', 'Choose...'),
@@ -10,14 +9,14 @@ STATES = (
 )
 
 class AddressForm(forms.Form):
-
     email = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Email'}))
     password = forms.CharField(widget=forms.PasswordInput())
     address_1 = forms.CharField(
-        label = 'Address',
+        label='Address',
         widget=forms.TextInput(attrs={'placeholder': '1234 Main St'})
     )
     address_2 = forms.CharField(
+        required=False,
         widget=forms.TextInput(attrs={'placeholder': 'Apartment, studio, or floor'})
     )
     city = forms.CharField()
@@ -33,6 +32,12 @@ class PenggunaForm(forms.ModelForm):
         exclude = ['tanggal_join',]
 
 class ContentForm(forms.ModelForm):
+    article = forms.CharField(
+        widget=forms.Textarea(attrs={'placeholder': 'Tulis artikel di sini...', 'rows': 4}),
+        label="Artikel",
+        required=True
+    )
+
     class Meta:
         model = Content
-        fields = '__all__'
+        fields = ['author', 'set_view', 'article']

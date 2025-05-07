@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
+
 <div class="alert alert-warning" role="alert">
     Entry Daftar Pengguna
 </div>
@@ -11,36 +12,38 @@
     <button type="submit" class="btn btn-primary">Sign in</button>
 </form>
 
-<div class="alert alert-warning" role="alert">
+<div class="alert alert-warning mt-4" role="alert">
     Daftar Pengguna
 </div>
 
-<table class="table table-bordered" id="data_entry_tbl">
+<table class="table table-bordered">
     <thead>
         <tr>
-            <th scope="col">Email</th>
-            <th scope="col">Alamat 1</th>
-            <th scope="col">Kota</th>
-            <th scope="col">Provinsi</th>
-            <th scope="col">Aksi</th>
+            <th>Email</th>
+            <th>Alamat 1</th>
+            <th>Kota</th>
+            <th>Provinsi</th>
+            <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
         {% for pengguna in list_pengguna %}
-        <tr class="record">
-            <td><label>{{ pengguna.email }}</label></td>
-            <td><label>{{ pengguna.address_1 }}</label></td>
-            <td><label>{{ pengguna.city }}</label></td>
-            <td><label>{{ pengguna.state }}</label></td>
+        <tr>
+            <td>{{ pengguna.email }}</td>
+            <td>{{ pengguna.address_1 }}</td>
+            <td>{{ pengguna.city }}</td>
+            <td>{{ pengguna.state }}</td>
             <td>
-                <form method="post" action="#">
-                    {% csrf_token %}
-                    <a href="{% url 'data_entry:view_pengguna' pengguna.id %}" class="btn btn-outline-success">View</a>
-                    <a href=""class="btn btn-outline-success">Edit</a>
-                </form>
+                <a href="{% url 'data_entry:view_pengguna' pengguna.id %}" class="btn btn-outline-success btn-sm">View</a>
+                <a href="{% url 'data_entry:update_pengguna' pengguna.id %}" class="btn btn-outline-primary btn-sm">Edit</a>
+                <a href="{% url 'data_entry:delete_pengguna' pengguna.id %}" class="btn btn-outline-danger btn-sm"
+                   onclick="return confirm('Yakin ingin menghapus pengguna ini?')">Delete</a>
             </td>
         </tr>
+        {% empty %}
+        <tr><td colspan="5" class="text-center">Belum ada pengguna yang terdaftar.</td></tr>
         {% endfor %}
     </tbody>
 </table>
+
 {% endblock %}

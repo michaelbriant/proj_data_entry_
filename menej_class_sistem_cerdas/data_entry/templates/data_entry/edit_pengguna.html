@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="alert alert-info" role="alert">
+    Edit Data Pengguna
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+    <a href="{% url 'data_entry:set_pengguna' %}" class="btn btn-secondary">Batal</a>  <!-- ✅ pakai namespace -->
+</form>
+
+{% endblock %}
